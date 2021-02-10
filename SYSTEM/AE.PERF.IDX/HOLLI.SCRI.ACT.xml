@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scri>
+   <metadata>
+      <row>
+         <version>12.3.3</version>
+      </row>
+   </metadata>
+   <general_attributes>
+      <row>
+         <minimum_ae_version>11.2</minimum_ae_version>
+         <auto_deactivation>A</auto_deactivation>
+         <child_flags>00000000000000000000000000000000</child_flags>
+         <ert>1</ert>
+         <last_runtimes>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</last_runtimes>
+         <max_parallel_action>1</max_parallel_action>
+         <mrt_time>000000</mrt_time>
+         <name>HOLLI.SCRI.ACT</name>
+         <type>SCRI</type>
+         <has_object_variables>1</has_object_variables>
+         <inherit_output_filter>N</inherit_output_filter>
+         <queue>CLIENT_QUEUE</queue>
+         <versioning_id>-1023035309</versioning_id>
+      </row>
+   </general_attributes>
+   <scripts>
+      <row>
+         <process><![CDATA[!:set &maxactive# = 11
+!:set &maxhosts# = 11
+:set &maxacthost# = add(&wp#, 2)
+:set &maxacthost# = format(&maxacthost#)
+:set &maxactive# = &maxacthost#
+:set &maxhosts# = &maxacthost#
+
+:set &key# = sys_act_me_nr()
+:set &cnt# = 0
+:set &start# = sys_time_physical('HHMMSS',)
+:set &save# = &start#
+:set &duration# = format(&duration#, '00')
+:set &stop# = add_time(&start#, 'MM:SS;&duration#:00')
+
+:set &objcntn# = add(&loopcnt#, 1)
+
+:if &objcntn# gt 4
+
+!:  p ** &objcntn# **
+:  set &objcntn# = mod(&objcntn#, 6)
+!:  p ** mod: &objcntn# **
+
+:endif
+
+:set &objcntn# = format(&objcntn#)
+
+!:p ** &loopcnt#/&objcntn# **
+
+:while &start# <= &stop#
+:  set &cntsav# = &cnt#
+:  set &hcnt# = 1
+:  while &hcnt# <= &maxhosts#
+:    set &hcnt# = format(&hcnt#,'#')
+:    set &objcnt# = sys_active_count('*', '*', 'HOLLI.SIMULATE.JOB.TRANSACTION.&objcntn#')
+!:    p &objcnt# = sys_active_count('*', '*', 'HOLLI.SIMULATE.JOB.TRANSACTION.&hcnt#')
+:    if &objcnt# < &maxactive#
+:       set &run# = activate_uc_object('HOLLI.SIMULATE.JOB.TRANSACTION.&objcntn#',,,,,PASS_VALUES))
+:       if &run# = 0
+:         exit 12
+:       endif
+:       set &cnt# = add(&cnt#, 1)
+:    endif
+:    set &hcnt# = add(&hcnt#,1)
+:  endwhile
+:  set &start# = sys_time_physical('HHMMSS',)
+:endwhile
+
+:set &stop# = &start#
+:set &start# = sys_time_physical('HHMMSS',)
+:set &diff# = diff_time(&save#, &start#, 'SS')
+:set &new# = mult(&cnt#, 120)
+:set &new# = div(&new#, &diff#)
+!:p &cnt# &save#-&stop# &start# diff:&diff# Job/120: &new#
+!:send_msg sys_user_name(), sys_user_dep, '&cnt# &save#-&stop# &start# diff:&diff# Job/120: &new#'
+:put_var_col HOLLI.VARA.TMP, '&loopcnt#', 1, &new#
+
+]]></process>
+      </row>
+   </scripts>
+   <script_attributes>
+      <row>
+         <activation_at_runtime>1</activation_at_runtime>
+      </row>
+   </script_attributes>
+   <object_variables>
+      <row>
+         <name>&amp;LOOPCNT#</name>
+      </row>
+      <row>
+         <name>&amp;WP#</name>
+      </row>
+   </object_variables>
+   <rollback_definitions>
+      <row>
+      </row>
+   </rollback_definitions>
+</scri>

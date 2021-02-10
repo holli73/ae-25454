@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jobs>
+   <metadata>
+      <row>
+         <version>12.3.3</version>
+      </row>
+   </metadata>
+   <general_attributes>
+      <row>
+         <minimum_ae_version>11.2</minimum_ae_version>
+         <auto_deactivation>J</auto_deactivation>
+         <child_flags>00000000000000000000000000000000</child_flags>
+         <ert>1</ert>
+         <platform>UNIX</platform>
+         <last_runtimes>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</last_runtimes>
+         <max_parallel>1</max_parallel>
+         <max_allowed_retcode>1</max_allowed_retcode>
+         <max_parallel_action>1</max_parallel_action>
+         <mrt_time>000000</mrt_time>
+         <name>AE-25140.JOBS.UNIX.P.OTAS_FAILOVER_CHECK_STATUS</name>
+         <type>JOBS</type>
+         <inherit_output_filter>N</inherit_output_filter>
+         <queue>CLIENT_QUEUE</queue>
+         <description>Aktuellen FailOver Status für Monitoring</description>
+         <time_zone>TZ.CET</time_zone>
+         <versioning_id>-2098886796</versioning_id>
+      </row>
+   </general_attributes>
+   <scripts>
+      <row>
+         <process><![CDATA[:print **** HOLLI PROCESS ****
+
+:rset &archive_server# = "get_var('VARA.P.OTAS_ENVIRONMENT','archive_server',1)"
+:rset &rsb_server#     = "get_var('VARA.P.OTAS_ENVIRONMENT','rsb_server',1)"
+:rset &archive_server_port# = "get_var('VARA.P.OTAS_ENVIRONMENT','archive_server',2)"
+:rset &rsb_server_port#     = "get_var('VARA.P.OTAS_ENVIRONMENT','rsb_server',2)"
+
+:data cd
+:data echo "awk '{print "##INFO: Hollli"}'"
+
+]]></process>
+      </row>
+      <row>
+         <pre_process><![CDATA[:print **** HOLLI PRE-PROCESS ****
+:rset &env# = 'P'
+!
+:rset &vara_env#                = 'VARA.&env#.OTAS_ENVIRONMENT'
+:p *** &vara_env# ***
+:rset &vara_statuspage#         = 'VARA.&env#.OTAS_MONITORING_STATUSPAGE'
+:rset &vara_statuspage_icinga#  = 'VARA.&env#.OTAS_MONITORING_STATUSPAGE_ICINGA'
+:rset &archive_server#          = "get_var('VARA.&env#.OTAS_ENVIRONMENT','archive_server',1)"
+:rset &rsb_server#              = "get_var('VARA.&env#.OTAS_ENVIRONMENT','rsb_server',1)"
+:rset &archive_server_port#     = "get_var('VARA.&env#.OTAS_ENVIRONMENT','archive_server',2)"
+:rset &rsb_server_port#         = "get_var('VARA.&env#.OTAS_ENVIRONMENT','rsb_server',2)"
+!
+]]></pre_process>
+      </row>
+      <row>
+         <post_process><![CDATA[:print **** HOLLI POST-PROCESS ****
+!
+:set &hostname#                   = get_att(host)
+:set &hostname#                   = str_lc(&hostname#)
+:set &archive_server_short#       = "get_var('&vara_env#','archive_server_short')"
+:set &icinga_check_name_enabled#  = 'app_archive_enabledNode'
+:set &icinga_check_name_disabled# = 'app_archive_disabledNode'
+:set &statusPage_name_primary#    = '&hostname#_Dispatcher_primary'
+:set &statusPage_name_secondary#  = '&hostname#_Dispatcher_secondary'
+:set &check_description#          = 'muss noch definiert werden + ICINGA Übergabe noch einpflegen'
+:set &check_timeout#              = '00:10:00'
+:set &act_timestamp#              = sys_timestamp_physical('TZ.CET')
+!
+:set &searchstring# = '##INFO:*'
+:set &read_report# = prep_process_report(,,"REP","&searchstring#")
+:  process &read_report#
+:  set &line# = get_process_line(&read_report#)
+:  define &linePos#, string, 3
+:  fill &linePos#[] = str_split(&line#," ")
+!
+! http://ideweiiss6735.infoserve.endress.com:8080
+:if &linePos#[2] = 'http://&archive_server#:&archive_server_port#'
+:  if &linePos#[3] = 'Ok'
+:    set &MonitorValue# = 'ArchiveServer Betrieb'
+! :      put_var_col '&vara_statuspage#','&statusPage_name_primary#',1,'&MonitorValue#'
+! :      put_var_col '&vara_statuspage#','&statusPage_name_primary#',2,'&act_timestamp#'
+! :      put_var_col '&vara_statuspage#','&statusPage_name_primary#',3,'&check_timeout#'
+! :      put_var_col '&vara_statuspage#','&statusPage_name_primary#',5,'&check_description#'
+! :      put_var_col '&vara_statuspage#','&statusPage_name_primary#',4,'INF'
+! :      put_var_col '&vara_statuspage_icinga#','&statusPage_name_primary#',1,'&hostname#'
+! :      put_var_col '&vara_statuspage_icinga#','&statusPage_name_primary#',2,'&icinga_check_name_enabled#'
+! :      put_var_col '&vara_statuspage_icinga#','&statusPage_name_primary#',5,'&MonitorValue#'
+! :      put_var_col '&vara_statuspage_icinga#','&statusPage_name_primary#',3,'0'
+:  endif
+:  if &linePos#[3] = 'Dis'
+:    set &MonitorValue# = 'RemoteStandby Betrieb'
+! :      put_var_col '&vara_statuspage#','&statusPage_name_secondary#',1,'&MonitorValue#'
+! :      put_var_col '&vara_statuspage#','&statusPage_name_secondary#',2,'&act_timestamp#'
+! :      put_var_col '&vara_statuspage#','&statusPage_name_secondary#',3,'&check_timeout#'
+! :      put_var_col '&vara_statuspage#','&statusPage_name_secondary#',5,'&check_description#'
+! :      put_var_col '&vara_statuspage#','&statusPage_name_secondary#',4,'WRN'
+! :      put_var_col '&vara_statuspage_icinga#','&statusPage_name_secondary#',1,'&hostname#'
+! :      put_var_col '&vara_statuspage_icinga#','&statusPage_name_secondary#',2,'&icinga_check_name_disabled#'
+! :      put_var_col '&vara_statuspage_icinga#','&statusPage_name_secondary#',5,'&MonitorValue#'
+! :      put_var_col '&vara_statuspage_icinga#','&statusPage_name_secondary#',3,'1'
+:  endif
+:  if &linePos#[3] = 'Err'
+!!!
+!!!
+:  endif
+:endif
+
+! http://ideweiiss6732.infoserve.endress.com:8080
+:if &linePos#[2] = 'http://&rsb_server#:&rsb_server_port#'
+:  if &linePos#[3] = 'Dis'
+:    set &MonitorValue# = 'ArchiveServer Betrieb'
+! :      put_var_col '&vara_statuspage#','&statusPage_name_secondary#',1,'&MonitorValue#'
+! :      put_var_col '&vara_statuspage#','&statusPage_name_secondary#',2,'&act_timestamp#'
+! :      put_var_col '&vara_statuspage#','&statusPage_name_secondary#',3,'&check_timeout#'
+! :      put_var_col '&vara_statuspage#','&statusPage_name_secondary#',5,'&check_description#'
+! :      put_var_col '&vara_statuspage#','&statusPage_name_secondary#',4,'INF'
+! :      put_var_col '&vara_statuspage_icinga#','&statusPage_name_secondary#',1,'&hostname#'
+! :      put_var_col '&vara_statuspage_icinga#','&statusPage_name_secondary#',2,'&icinga_check_name_disabled#'
+! :      put_var_col '&vara_statuspage_icinga#','&statusPage_name_secondary#',5,'&MonitorValue#'
+! :      put_var_col '&vara_statuspage_icinga#','&statusPage_name_secondary#',3,'0'
+:  endif
+:  if &linePos#[3] = 'Ok'
+:    set &MonitorValue# = 'RemoteStandby Betrieb'
+! :      put_var_col '&vara_statuspage#','&statusPage_name_primary#',1,'&MonitorValue#'
+! :      put_var_col '&vara_statuspage#','&statusPage_name_primary#',2,'&act_timestamp#'
+! :      put_var_col '&vara_statuspage#','&statusPage_name_primary#',3,'&check_timeout#'
+! :      put_var_col '&vara_statuspage#','&statusPage_name_primary#',5,'&check_description#'
+! :      put_var_col '&vara_statuspage#','&statusPage_name_primary#',4,'WRN'
+! :      put_var_col '&vara_statuspage_icinga#','&statusPage_name_primary#',1,'&hostname#'
+! :      put_var_col '&vara_statuspage_icinga#','&statusPage_name_primary#',2,'&icinga_check_name_enabled#'
+! :      put_var_col '&vara_statuspage_icinga#','&statusPage_name_primary#',5,'&MonitorValue#'
+! :      put_var_col '&vara_statuspage_icinga#','&statusPage_name_primary#',3,'1'
+:  endif
+:  if &linePos#[3] = 'Err'
+!!!
+!!!
+:  endif
+:endif
+:endprocess
+:close_process &read_report#
+
+]]></post_process>
+      </row>
+   </scripts>
+   <job_attributes>
+      <row>
+         <activation_at_runtime>1</activation_at_runtime>
+         <platform>UNIX</platform>
+         <agent>AE-25140.HOSTG.P.OTAS</agent>
+         <login>LOGIN.ALL</login>
+         <job_report_path>2</job_report_path>
+         <priority>0</priority>
+         <unix_shell></unix_shell>
+         <unix_shell_options></unix_shell_options>
+         <unix_type></unix_type>
+         <unix_cmd></unix_cmd>
+      </row>
+   </job_attributes>
+   <rollback_definitions>
+      <row>
+      </row>
+   </rollback_definitions>
+</jobs>

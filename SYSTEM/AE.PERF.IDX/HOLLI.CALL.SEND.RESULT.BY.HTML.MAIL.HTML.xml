@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<call>
+   <metadata>
+      <row>
+         <version>12.3.3</version>
+      </row>
+   </metadata>
+   <general_attributes>
+      <row>
+         <minimum_ae_version>11.2</minimum_ae_version>
+         <auto_deactivation>A</auto_deactivation>
+         <child_flags>00000000000000000000000000000000</child_flags>
+         <ert>222</ert>
+         <last_runtimes>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</last_runtimes>
+         <max_parallel_action>1</max_parallel_action>
+         <mrt_time>000000</mrt_time>
+         <name>HOLLI.CALL.SEND.RESULT.BY.HTML.MAIL.HTML</name>
+         <type>CALL</type>
+         <has_object_variables>1</has_object_variables>
+         <inherit_output_filter>N</inherit_output_filter>
+         <queue>CLIENT_QUEUE</queue>
+         <sub_type>3</sub_type>
+         <versioning_id>-1249031444</versioning_id>
+      </row>
+   </general_attributes>
+   <scripts>
+      <row>
+         <process><![CDATA[:ADD_ATT RECIPIENT, "&$USER#/&$DEPARTMENT#"
+
+:set &parentnr# = SYS_ACT_PARENT_NR('ACT')
+:set &date# = SYS_DATE_PHYSICAL('YYYY-MM-DD')
+:set &time# = SYS_TIME_PHYSICAL("HH:MM:SS")
+
+:set &hnd# = prep_process_var(HOLLI.VARA.RESULT.HISTORY)
+:process &hnd#
+:  set &data# = get_process_line(&hnd#)
+
+:  if str_find(&data#, '&parentnr#') GT 0
+:    set &vtmp1# = get_process_line(&hnd#, 1)
+:    set &lena# = str_length(&vtmp1#)
+
+:    set &v1# = str_cut(&vtmp1#, 1, 19)
+
+:    set &lenpsl# = str_find(&vtmp1#, '/', 1)
+:    set &lenpbr# = str_find(&vtmp1#, '(', 1)
+:    set &strt# = add(&lenpbr#, 1)
+:    set &pos# = sub(&lenpsl#, &strt#)
+:    set &v2# = str_cut(&vtmp1#, &strt#, &pos#)
+
+:    set &lenpbr# = str_find(&vtmp1#, ')', 1)
+:    set &strt# = add(&lenpsl#, 1)
+:    set &pos# = sub(&lena#, &strt#)
+:    set &v3# = str_cut(&vtmp1#, &strt#, &pos#)
+
+:    set &v4# = get_process_line(&hnd#, 2)
+
+:    set &v5# = get_process_line(&hnd#, 3)
+:    set &len# = str_find(&v5#, ' ', 1)
+:    set &wpcnt# = str_cut(&v5#, 1, &len#)
+:    set &wpcnt# = str_trim(&wpcnt#)
+
+:    define &wploada#, string, 500
+:    set &v66# = get_process_line(&hnd#, 5)
+:    fill &wploada#[] = str_split(&v66#, '/')
+:    set &alen# = length(&wploada#[], SIZE)
+:    set &cnt# = 1
+:    while &cnt# le &alen#
+
+:      set &vsum# = add(&vsum#, &wploada#[&cnt#])
+:      set &cnt# = add(&cnt#, 1)
+
+:    endwhile
+
+:    set &divres# = div(&vsum#, &alen#)
+:    set &v6# = format(&divres#)
+
+:    set &v7# = get_process_line(&hnd#, 6)
+
+:  endif
+
+:endprocess
+
+:set &v0h# = hex(&company#)
+:set &v1h# = hex(&v1#)
+:set &v2h# = hex(&v2#)
+:set &v3h# = hex(&v3#)
+:set &v4h# = str_sub(&v4#, ',', '.')
+:set &v4h# = hex(&v4#)
+:set &v5h# = hex(&v5#)
+:set &v6h# = str_sub(&v6#, ',', '.')
+:set &v6h# = hex(&v6#)
+:set &v7h# = hex(&v7#)
+:set &v8h# = hex(&$SYSTEM#)
+:set &v9h# = '&$CLIENT# - &$CLIENT_DESC#'
+:set &v9h# = hex(&v9h#)
+:set &v10h# = hex(&OS#)
+:set &v11h# = hex(&DB#)
+:set &v12h# = hex(&REMARKS#)
+:set &v5pos1# = str_find(&v5#, ':')
+:set &v5pos2# = str_find_rev(&v5#, '-')
+:set &v5pos2# = sub(&v5pos2#, &v5pos1#)
+:set &v55# = str_cut(&v5#, &v5pos1#, &v5pos2#)
+:set &v55# = str_sub(&v55#, ':', '')
+:set &v55# = str_trim(&v55#)
+:set &v13h# = hex(&v55#)
+:set &v14h# = hex(&CPUS#)
+:set &v15h# = hex(&wpcnt#)
+:set &hash# = mult(&v6#, &CPUS#)
+:set &hash# = format(&hash#)
+
+:  put_att SUBJECT = "AE.Performance.Index result for &company#"
+:  set &ht = "AE '&$SYSTEM#' PerformanceIndex result from &date# &time#"
+:  set &c1# = "System name"
+:  set &c2# = "Client"
+:  set &c3# = "Time"
+:  set &c4# = "Executed at (UTC) with version: "
+:  set &c5# = "AE.PerformanceIndex reached: "
+:  set &c6# = "Settings used: "
+:  set &c7# = "Scalability on each WP: "
+:  set &c8# = "Backlog load on MQ tables: "
+:  set &c9# = "AE on: &OS# with &CPUS# CPU/CORE's"
+:  set &c10# = "AE DB used: &DB#"
+:  set &c11# = "Remarks: &REMARKS#"]]></process>
+      </row>
+   </scripts>
+   <notification_attributes>
+      <row>
+         <priority>2</priority>
+         <subject><![CDATA[<Will be replaced by Process.>]]></subject>
+         <content><![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+<style type="text/css">
+.c1 {
+  background-color: #ECAC00;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.8em;
+  font-style: italic;
+  padding: 2px 10px 2px 10px;
+}
+.c2 {
+  background-color: #ECECEC;
+  font-size: 0.8em;
+  font-weight: bold;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.c3 {
+  background-color: #B2B2B2;
+  font-size: 1.5em;
+  padding: 5px 5px 5px 5px;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+<table style="border:1px solid #000000;box-shadow:8px 8px 8px #666;" cellspacing="0" cellpadding="0">
+<tr><td class="c3">&ht</td></tr>
+<tr>
+<td style="padding:0;">	
+<table border = "0" rules = "none" cellspacing="0" cellpadding="0" width="100%">
+<colgroup width="120px"/>
+<tr><td class="c1">&c1#</td><td class="c2">&$SYSTEM#</td></tr>
+<tr><td class="c1">&c2#</td><td class="c2">&$CLIENT# (&$CLIENT_DESC#)</td></tr>
+<tr><td class="c1">&c3#</td><td class="c2">&date# &time#</td></tr>
+<tr><td class="c1">&c4#</td><td class="c2">&v1# (&v2#/&v3#)</td></tr>
+<tr><td class="c1">&c5#</td><td class="c2">&v4#</td></tr>
+<tr><td class="c1">&c6#</td><td class="c2">&v5#</td></tr>
+<tr><td class="c1">&c7#</td><td class="c2">&v66# (avg. &v6#)</td></tr>
+<tr><td class="c1">&c8#</td><td class="c2">&v7#</td></tr>
+<tr><td class="c2" style="text-align:center;" colspan="2">&c9#</td></tr>
+<tr><td class="c2" style="text-align:center;" colspan="2">&c10#</td></tr>
+<tr><td class="c2" style="text-align:center;" colspan="2">&c11#</td></tr>
+</table>
+</td></tr>
+<tr><td style="padding: 5px 5px 5px 5px;"align="center"><a href="http://www.automic.com"><img border="0" src="http://cdn2.hubspot.net/hub/241294/file-205974691-png/Images/Logos_&_Icons/Automic_logo.png" width="183" alt="Automic" /></a></td></tr>
+</table>
+<br>
+please help us to get more information about our customer's environment and POST RESULT to AUTOMIC and see where your system fit's in.
+<hr>
+<ul>
+	<li><a class="3"  href="https://downloads.automic.com/tools/performance_index?v0=&v0h#&&v1=&v1h#&&v2=&v2h#&&v3=&v3h#&&v4=&v4h#&&v5=&v5h#&&v6=&v6h#&&v7=&v7h#&&v8=&v8h#&&v9=&v9h#&&v10=&v10h#&&v11=&v11h#&&v12=&v12h#&&v13=&v13h#&&v14=&v14h#&&v15=&v15h#&&v16=&hash#">please-PublishYourResult</a></li>
+</ul>
+<hr>
+</body>]]></content>
+      </row>
+   </notification_attributes>
+   <object_variables>
+      <row>
+         <name>&amp;COMPANY#</name>
+      </row>
+      <row>
+         <name>&amp;CPUS#</name>
+      </row>
+      <row>
+         <name>&amp;DB#</name>
+      </row>
+      <row>
+         <name>&amp;OS#</name>
+      </row>
+      <row>
+         <name>&amp;REMARKS#</name>
+      </row>
+   </object_variables>
+   <rollback_definitions>
+      <row>
+      </row>
+   </rollback_definitions>
+</call>

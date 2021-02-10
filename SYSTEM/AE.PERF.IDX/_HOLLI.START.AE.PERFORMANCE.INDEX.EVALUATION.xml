@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scri>
+   <metadata>
+      <row>
+         <version>12.3.3</version>
+      </row>
+   </metadata>
+   <general_attributes>
+      <row>
+         <minimum_ae_version>11.2</minimum_ae_version>
+         <auto_deactivation>A</auto_deactivation>
+         <child_flags>00000000000000000000000000000000</child_flags>
+         <ert>121</ert>
+         <last_runtimes>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</last_runtimes>
+         <max_parallel_action>1</max_parallel_action>
+         <mrt_time>000000</mrt_time>
+         <name>_HOLLI.START.AE.PERFORMANCE.INDEX.EVALUATION</name>
+         <type>SCRI</type>
+         <has_object_variables>1</has_object_variables>
+         <inherit_output_filter>N</inherit_output_filter>
+         <queue>CLIENT_QUEUE</queue>
+         <description>v1.2.0</description>
+         <versioning_id>1268430977</versioning_id>
+      </row>
+   </general_attributes>
+   <scripts>
+      <row>
+         <process><![CDATA[:set &ucertcalcsve# = get_var(UC_CLIENT_SETTINGS, ERT_CALCULATION)
+:put_var UC_CLIENT_SETTINGS, 'ERT_CALCULATION', 'BATCH'
+
+:SET &AEVERSION# = SYS_INFO(SERVER, VERSION,ALL)
+:set &AEPERFIDXV# = &$OBJECT_TITLE#
+
+:if get_oh_idnr('HOLLI.VARA.SQLI.GET.COMPANY.KEY', &$CLIENT#) = 0
+:  beginread
+:    print ** SQLI not found - please enter your COMPANY ID/NAME from SYSTEM OVERVIEW - LICENCE manualy **
+:  endread
+:  set &SQLIERROR# = 'NOK'
+:else
+:  if GET_VAR(UC_SYSTEM_SETTINGS, 'SQLVAR_INTERNAL') = 'YES' or 'Y'
+:    set &SQLIERROR# = 'OK'
+:    set &company# = get_var(HOLLI.VARA.SQLI.GET.COMPANY.KEY)
+:  else
+:    beginread
+:      print ** SQLI object found -> but UC_SYSTEM_SETTINGS/SQLVAR_INTERNAL is set to 'NO' **
+:      print ** please enter your COMPANY ID/NAME from SYSTEM OVERVIEW - LICENCE manualy **
+:    endread
+:    set &SQLIERROR# = 'NOK'
+:  endif
+:endif
+
+:if GET_VAR(UC_SYSTEM_SETTINGS, 'SCR_LOOPCHK_TIME', 1) lt 150
+:  beginread
+:    print ** The parameter 'UC_SYSTEM_SETTINGS/SCR_LOOPCHK_TIME' must be set at least to 150 **
+:    print ** within client 0 before this test can be executed! **
+:  endread
+:  exit 1
+:endif
+
+! :if get_oh_idnr('HOLLI.VARA.SETTINGS', &$CLIENT#) = 0
+! :  set &cr# = create_object('VARA', 'HOLLI.VARA.SETTINGS',,,,,)
+! :  put_var HOLLI.VARA.SETTINGS, 'company#','<your company name>','','','',''
+! :  put_var HOLLI.VARA.SETTINGS, 'cpus#','1','','','',''
+! :  put_var HOLLI.VARA.SETTINGS, 'db#','ORACLE','','','',''
+! :  put_var HOLLI.VARA.SETTINGS, 'duration#','2','','','',''
+! :  put_var HOLLI.VARA.SETTINGS, 'email#','YES','','','',''
+! :  put_var HOLLI.VARA.SETTINGS, 'os#','LINUX','','','',''
+! :  put_var HOLLI.VARA.SETTINGS, 'remarks#','XEON 3.6 GHZ DBV:12.1.0.2 DBOS:ORA-LNX EL 7.2','','','',''
+! :  put_var HOLLI.VARA.SETTINGS, 'wp#','4','','','',''
+! :endif
+
+:set &svwp# = get_var(HOLLI.VARA.SETTINGS, 'wp#')
+:set &svduration# = get_var(HOLLI.VARA.SETTINGS, 'duration#')
+:set &svemail# = get_var(HOLLI.VARA.SETTINGS, 'email#')
+:set &svos# = get_var(HOLLI.VARA.SETTINGS, 'os#')
+:set &svcpus# = get_var(HOLLI.VARA.SETTINGS, 'cpus#')
+:set &svdb# = get_var(HOLLI.VARA.SETTINGS, 'db#')
+:set &svremarks# = get_var(HOLLI.VARA.SETTINGS, 'remarks#')
+:set &svcompany# = get_var(HOLLI.VARA.SETTINGS, 'company#')
+
+:beginread 'AE.PerformanceEvaluation', F
+:  if &SQLIERROR# = 'OK'
+:    print Company:            ** &company# **
+:  else
+:    read &company#, '00', "Please enter you company id/name", '&svcompany#'
+:  endif
+:  print ---------- ---------- ---------- ---------- ---------- ---------- ----------
+:  read &wp#, '00', "How many WP's are running (DWP don't count!) ", '&svwp#', n
+:  read &duration#, '01-59', "How long should the test run (Minutes) ", '&svduration#', n
+:  print ---------- ---------- only information ---------- ---------- ---------- ----
+:  read &eMail#, "'YES', 'NO'", "Receive result as eMail ", '&svemail#',
+:  read &OS#, "'AIX', 'HP-UX', 'LINUX', 'SOLARIS', 'WINDOWS', 'zLINUX'", "On which OS is the AE running ", '&svos#',
+:  read &CPUS#, '00', "How many CPU's(cores) are available for the AE ", '&svcpus#', n
+:  read &DB#, "'DB2', 'ORACLE', 'PostgreSQL', 'SQL SERVER'", "Used AE Database ", '&svdb#',
+:  read &REMARKS#, '00', "additional comments ", "&svremarks#",
+:  print ---------- ---------- optional ---------- ---------- ---------- ---------- -
+:  read &SIMREPORT#, "'YES', 'NO'", "Simulate job report transaction as well?", 'NO', n
+:  read &SIMREPORTSZ#, '00', "ReportLines (500 = apx. 16KB)", '250', n
+
+:endread
+
+:if &wp# LT 1
+:  beginread
+:    print ** Incorrect parameter used for WP's **
+:    print ** value must be higher than 0! **
+:  endread
+:  exit 1
+:endif
+
+:put_var HOLLI.VARA.SETTINGS, 'wp#', &wp#
+:put_var HOLLI.VARA.SETTINGS, 'duration#', &duration#
+:put_var HOLLI.VARA.SETTINGS, 'email#', &email#
+:put_var HOLLI.VARA.SETTINGS, 'os#', &os#
+:put_var HOLLI.VARA.SETTINGS, 'cpus#', &cpus#
+:put_var HOLLI.VARA.SETTINGS, 'db#', &db#
+:put_var HOLLI.VARA.SETTINGS, 'remarks#', &remarks#
+:put_var HOLLI.VARA.SETTINGS, 'company#', &company#
+
+:set &cnt# = 0
+:delete_var 'HOLLI.VARA.TMP'
+
+:set &exects# = sys_timestamp_physical()
+
+:while &cnt# < &wp#
+:  set &loopcnt# = &cnt#
+:  set &run# = activate_uc_object('holli.scri.act', , , , , PASS_VALUES)
+:  put_var 'HOLLI.VARA.TMP', '&cnt#', '', '&run#'
+:  set &cnt# = add(&cnt#, 1)
+:endwhile
+
+:set &wtime# = mult(&duration#, 60)
+:wait &wtime#
+
+:set &wait# = 1
+
+! :set &DOITMQCNT# = 1
+! :if SYS_INFO(SERVER, VERSION, MAJOR)= 11
+! :  if SYS_INFO(SERVER, VERSION, MINOR)= 2
+! :    if SYS_INFO(SERVER, VERSION, PATCH)= 0 OR 1
+! :      set &DOITMQCNT# = 0
+! :    endif
+! :  endif
+! :endif
+
+:define &apwpc#, string, 999
+:define &arwpc#, string, 999
+:define &aowpc#, string, 999
+:define &adwpc#, string, 999
+:define &awpc#, string, 999
+:set &cnt# = 1
+:while &cnt# GT 0
+
+
+!:  if &DOITMQCNT# = 1
+
+:    set &pwpc# = SYS_INFO(MQPWP, COUNT)
+:    set &rwpc# = SYS_INFO(MQRWP, COUNT)
+:    set &owpc# = SYS_INFO(MQOWP, COUNT)
+:    set &dwpc# = SYS_INFO(MQDWP, COUNT)
+:    set &wpc# = SYS_INFO(MQWP, COUNT)
+
+:p &pwpc# &rwpc# &owpc# &dwpc# &wpc#
+
+:    set &overload# = 0
+
+:    if &pwpc# > &overload#
+:      set &apwpc#[&wait#] = &pwpc#
+:    endif
+
+:    if &rwpc# > &overload#
+:      set &arwpc#[&wait#] = &rwpc#
+:    endif
+
+:    if &owpc# > &overload#
+:      set &aowpc#[&wait#] = &owpc#
+:    endif
+
+:    if &dwpc# > &overload#
+:      set &adwpc#[&wait#] = &dwpc#
+:    endif
+
+:    if &wpc# > &overload#
+:      set &awpc#[&wait#] = &wpc#
+:    endif
+
+!:  endif
+
+:  set &cnt# = sys_active_count('ANY_ALIVE', 'SCRI', 'HOLLI.SCRI.ACT')
+:  set &wait# = add(&wait#, 1)
+:  wait 1
+
+:endwhile
+
+:set &cnt# = 0
+:set &result# = 0
+
+:define &wpcnta#, string, 999
+:while &cnt# lt &wp#
+
+:  set &resultx# = get_var('HOLLI.VARA.TMP', '&cnt#')
+:  set &result# = add(&result#, &resultx#)
+:  set &cnt# = add(&cnt#, 1)
+:  set &acnt# = format(&cnt#)
+:  set &resultxt# = format(&resultx#)
+:  set &wpcnta#[&acnt#] = '&resultxt#'
+
+:endwhile
+
+! * 30 * 24 = Jobs/day
+:set &executiond# = mult(&result#, 720)
+:set &wp# = format(&wp#, "00")
+:set &result# = format(&result#)
+:set &wait# = format(&wait#)
+:set &executiond# = format(&executiond#)
+
+:set &acnt# = 1
+:while &acnt# le length(&wpcnta#[], SIZE)
+
+:  set &msgstr# = '&msgstr#&wpcnta#[&acnt#]/'
+:  set &acnt# = add(&acnt#, 1)
+:  set &acnt# = format(&acnt#)
+
+:endwhile
+
+!:if &DOITMQCNT# = 1
+
+:if length(&apwpc#[], SIZE)gt 0
+:  set &acntl# = 1
+:  set &PWPQCNT# = 0
+:  while &acntl# le length(&apwpc#[], SIZE)
+! :    set &xx# = &apwpc#[&acntl#]
+! :    p ** &acntl# ** &xx# **
+:    if &apwpc#[&acntl#] gt &PWPQCNT#
+:      set &PWPQCNT# = format(&apwpc#[&acntl#])
+:    endif
+:    set &acntl# = add(&acntl#, 1)
+:    set &acntl# = format(&acntl#)
+:  endwhile
+:  if &PWPQCNT# = 20876
+:    set &PWPQCNT# = 'n.a.'
+:  endif
+:endif
+
+
+:if length(&arwpc#[], SIZE)gt 0
+:  set &acntl# = 1
+:  set &RWPQCNT# = 0
+:  while &acntl# le length(&arwpc#[], SIZE)
+:    if &arwpc#[&acntl#] gt &RWPQCNT#
+:      set &RWPQCNT# = format(&arwpc#[&acntl#])
+:    endif
+:    set &acntl# = add(&acntl#, 1)
+:    set &acntl# = format(&acntl#)
+:  endwhile
+:  if &RWPQCNT# = 20876
+:    set &RWPQCNT# = 'n.a.'
+:  endif
+:endif
+
+:if length(&aowpc#[], SIZE)gt 0
+:  set &acntl# = 1
+:  set &OWPQCNT# = 0
+:  while &acntl# le length(&aowpc#[], SIZE)
+:    if &aowpc#[&acntl#] gt &OWPQCNT#
+:      set &OWPQCNT# = format(&aowpc#[&acntl#])
+:    endif
+:    set &acntl# = add(&acntl#, 1)
+:    set &acntl# = format(&acntl#)
+:  endwhile
+:  if &OWPQCNT# = 20876
+:    set &OWPQCNT# = 'n.a.'
+:  endif
+:endif
+
+:if length(&adwpc#[], SIZE)gt 0
+:  set &acntl# = 1
+:  set &DWPQCNT# = 0
+:  while &acntl# le length(&adwpc#[], SIZE)
+:    if &adwpc#[&acntl#] gt &DWPQCNT#
+:      set &DWPQCNT# = format(&adwpc#[&acntl#])
+:    endif
+:    set &acntl# = add(&acntl#, 1)
+:    set &acntl# = format(&acntl#)
+:  endwhile
+:  if &DWPQCNT# = 20876
+:    set &DWPQCNT# = 'n.a.'
+:  endif
+:endif
+
+:if length(&awpc#[], SIZE)gt 0
+:  set &acntl# = 1
+:  set &WPQCNT# = 0
+:  while &acntl# le length(&awpc#[], SIZE)
+! :    set &xx# = &awpc#[&acntl#]
+! :    p ** &acntl# ** &xx# **
+:    if &awpc#[&acntl#] gt &WPQCNT#
+:      set &WPQCNT# = format(&awpc#[&acntl#])
+:    endif
+:    set &acntl# = add(&acntl#, 1)
+:    set &acntl# = format(&acntl#)
+:  endwhile
+:  if &WPQCNT# = 20876
+:    set &WPQCNT# = 'n.a.'
+:  endif
+:endif
+
+:set &perfl# = str_length(&executiond#)
+:if &perfl# lt 7
+:  if &perfl# = 6
+:    set &aeperffactor# = '0,'
+:  endif
+:  if &perfl# = 5
+:    set &aeperffactor# = '0,0'
+:  endif
+:  if &perfl# = 4
+:    set &aeperffactor# = '0,00'
+:  endif
+:  if &perfl# = 3
+:    set &aeperffactor# = '0,000'
+:  endif
+:  if &perfl# = 2
+:    set &aeperffactor# = '0,0000'
+:  endif
+:  if &perfl# = 1
+:    set &aeperffactor# = '0,00000'
+:  endif
+:  set &res# = str_cut(&executiond#, 1, 2)
+:  set &aeperffactor# = '&aeperffactor#&res#'
+
+:else
+
+:   if &perfl# = 7
+:      set &res1# = str_cut(&executiond#, 1, 1)
+:      set &res2# = str_cut(&executiond#, 2, 2)
+:   endif
+:   if &perfl# = 8
+:      set &res1# = str_cut(&executiond#, 1, 2)
+:      set &res2# = str_cut(&executiond#, 3, 2)
+:   endif
+:   if &perfl# = 9
+:      set &res1# = str_cut(&executiond#, 1, 3)
+:      set &res2# = str_cut(&executiond#, 4, 2)
+:   endif
+:   if &perfl# = 10
+:      set &res1# = str_cut(&executiond#, 1, 4)
+:      set &res2# = str_cut(&executiond#, 5, 2)
+:   endif
+:   if &perfl# = 11
+:      set &res1# = str_cut(&executiond#, 1, 5)
+:      set &res2# = str_cut(&executiond#, 6, 2)
+:   endif
+
+:   set &aeperffactor# = '&res1#.&res2#'
+
+:endif
+
+:put_var 'HOLLI.VARA.RESULT.HISTORY', 'NO-PWP-KICK -> &exects# (&AEPERFIDXV#/&AEVERSION#)', &aeperffactor#, "&wp# wp's - RunTime: &duration# - Report (&SIMREPORT#/&SIMREPORTSZ#)", &$RUNID#, &msgstr#, 'P:&PWPQCNT#/W:&WPQCNT#/R:&RWPQCNT#/O:&OWPQCNT#/D:&DWPQCNT#'
+
+!:endif
+
+:put_att ARCHIVE_KEY1 = "&AEPERFIDXV# -> with &wp#  wp's -> &aeperffactor#"
+:put_att ARCHIVE_KEY2 = '&executiond# -> &result#'
+:put_var UC_CLIENT_SETTINGS, 'ERT_CALCULATION', '&ucertcalcsve#'
+
+:if &eMail# = 'YES'
+:  set &out# = activate_uc_object(HOLLI.CALL.SEND.RESULT.BY.HTML.MAIL.HTML,,,,, PASS_VALUES)
+:endif
+
+:beginread
+:  print &wp# WPs achived within system: &$SYSTEM# - > following AE performance index: &aeperffactor# (RunTime: &duration# - &result# - P:&PWPQCNT#/W:&WPQCNT#/R:&RWPQCNT#/O:&OWPQCNT#/D:&DWPQCNT#).
+:endread
+!:print &wp# WPs achived within system: &$SYSTEM# - > following AE performance index: &executiond# (&result#).
+:delete_var 'HOLLI.VARA.TMP'
+]]></process>
+      </row>
+   </scripts>
+   <script_attributes>
+      <row>
+      </row>
+   </script_attributes>
+   <object_variables>
+      <row>
+         <name>&amp;COMPANY#</name>
+      </row>
+      <row>
+         <name>&amp;CPUS#</name>
+      </row>
+      <row>
+         <name>&amp;DB#</name>
+      </row>
+      <row>
+         <value>2</value>
+         <name>&amp;DURATION#</name>
+      </row>
+      <row>
+         <value>0</value>
+         <name>&amp;LOOPCNT#</name>
+      </row>
+      <row>
+         <name>&amp;OS#</name>
+      </row>
+      <row>
+         <name>&amp;REMARKS#</name>
+      </row>
+      <row>
+         <value>N</value>
+         <name>&amp;SIMREPORT#</name>
+      </row>
+      <row>
+         <name>&amp;WP#</name>
+      </row>
+   </object_variables>
+   <rollback_definitions>
+      <row>
+      </row>
+   </rollback_definitions>
+</scri>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scri>
+   <metadata>
+      <row>
+         <version>12.3.3</version>
+      </row>
+   </metadata>
+   <general_attributes>
+      <row>
+         <minimum_ae_version>11.2</minimum_ae_version>
+         <auto_deactivation>A</auto_deactivation>
+         <child_flags>00000000000000000000000000000000</child_flags>
+         <last_runtimes>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</last_runtimes>
+         <max_parallel_action>1</max_parallel_action>
+         <mrt_time>000000</mrt_time>
+         <name>AE-22781.SCRI.NEW.2</name>
+         <type>SCRI</type>
+         <inherit_output_filter>N</inherit_output_filter>
+         <queue>CLIENT_QUEUE</queue>
+         <versioning_id>-1566473242</versioning_id>
+      </row>
+   </general_attributes>
+   <scripts>
+      <row>
+         <process><![CDATA[:set &file# = 'working.file'
+!:set &file# = 'not.working.file'
+!:set &file# = 'holli.txt'
+!:SET &HND# = PREP_PROCESS_FILE("SMUCPER06-1","/tmp/&file#","*","COL=LENGTH,LENGTH_TAB='27=HEADER,3=SENDER'")
+
+:SET &HND# = PREP_PROCESS_FILE("SMUCPER06-1","/tmp/&file#","*","COL=LENGTH,LENGTH_TAB='20=HEADER,20=SENDER'")
+
+:SET &NumRows# = GET_PROCESS_INFO(&Hnd#,ROWS)
+:p &numrows# <------ Ergebnis ist 0
+!U00020681 Runtime error in object 'AE-22781.SCRI.NEW.2', line '00007': GET_PROCESS_LINE is not accepted outside a PROCESS END_PROCESS block
+: process &hnd#
+:p &file#
+:PSET &PART1# = GET_PROCESS_LINE(&HND#,'HEADER',,1)
+:PSET &PART2# = GET_PROCESS_LINE(&HND#,'SENDER',,1)
+:p SENDER,,1
+:p <----- script läuft hier auf Fehler Sender/Partner
+:p &PART1# / &PART2#
+:endprocess
+:CLOSE_PROCESS &HND#]]></process>
+      </row>
+   </scripts>
+   <script_attributes>
+      <row>
+         <activation_at_runtime>1</activation_at_runtime>
+      </row>
+   </script_attributes>
+   <rollback_definitions>
+      <row>
+      </row>
+   </rollback_definitions>
+</scri>

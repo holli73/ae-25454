@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vara>
+   <metadata>
+      <row>
+         <version>12.3.3</version>
+      </row>
+   </metadata>
+   <general_attributes>
+      <row>
+         <minimum_ae_version>11.2</minimum_ae_version>
+         <child_flags>00000000000000000000000000000000</child_flags>
+         <last_runtimes>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</last_runtimes>
+         <name>HOLLI.VARA.RESULT.HISTORY</name>
+         <type>VARA</type>
+         <sub_type>STATIC</sub_type>
+         <versioning_id>-971034164</versioning_id>
+      </row>
+   </general_attributes>
+   <variable_definitions>
+      <row>
+         <column_count>5</column_count>
+         <on_not_found>I</on_not_found>
+         <sort_order>0</sort_order>
+         <type>STATIC</type>
+         <data_type>C</data_type>
+         <validity_range>FREI</validity_range>
+      </row>
+   </variable_definitions>
+   <static_values>
+      <row>
+         <client>1470</client>
+         <value1>1.24</value1>
+         <value2>04 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001003005</value3>
+         <value4>406/415/454/453/</value4>
+         <value5>P:2/W:32/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-10-24 13:49:27 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>1.09</value1>
+         <value2>04 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001003591</value3>
+         <value4>385/381/382/367/</value4>
+         <value5>P:1/W:22/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-10-24 13:56:21 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>10.51</value1>
+         <value2>14 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001008002</value3>
+         <value4>929/861/1049/1151/927/1146/1009/1020/1059/1022/1139/1126/1109/1055/</value4>
+         <value5>P:1/W:59/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-10-24 14:01:08 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>10.36</value1>
+         <value2>14 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001027191</value3>
+         <value4>954/954/1100/973/1102/1207/1073/873/1019/1021/1045/1040/955/1083/</value4>
+         <value5>P:1/W:35/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-10-24 14:04:59 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>10.68</value1>
+         <value2>14 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001031588</value3>
+         <value4>957/1148/1031/1145/938/1075/1110/1004/1080/1108/1138/1137/968/1006/</value4>
+         <value5>P:1/W:51/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-10-24 14:07:32 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>5.87</value1>
+         <value2>08 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001078002</value3>
+         <value4>913/892/1006/1232/1085/1110/975/951/</value4>
+         <value5>P:1/W:70/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-08 08:25:59 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>6.18</value1>
+         <value2>08 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001102002</value3>
+         <value4>941/993/1138/1142/1207/1215/979/975/</value4>
+         <value5>P:1/W:50/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-19 13:26:50 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>6.02</value1>
+         <value2>08 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001110284</value3>
+         <value4>885/900/1078/1211/1231/1172/1010/887/</value4>
+         <value5>P:1/W:47/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-19 13:29:47 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>6.05</value1>
+         <value2>08 wp's - RunTime: 5 - Report (NO/250)</value2>
+         <value3>0001117501</value3>
+         <value4>947/922/1109/1152/1152/1182/970/977/</value4>
+         <value5>P:1/W:47/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-19 14:10:35 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>7.05</value1>
+         <value2>08 wp's - RunTime: 5 - Report (NO/250)</value2>
+         <value3>0001137881</value3>
+         <value4>1102/1108/1247/1375/1411/1278/1146/1138/</value4>
+         <value5>P:1/W:39/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-19 14:43:04 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>19.53</value1>
+         <value2>30 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001155665</value3>
+         <value4>865/926/900/929/1065/1025/939/926/807/974/847/929/832/880/911/857/860/813/883/927/833/938/824/947/845/955/845/958/895/1002/</value4>
+         <value5>P:1/W:135/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-19 14:48:54 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>27.93</value1>
+         <value2>60 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001191361</value3>
+         <value4>655/671/674/725/636/679/655/703/638/692/552/634/644/642/719/655/673/641/590/671/657/618/670/694/709/605/586/605/604/684/615/650/683/674/565/680/647/702/603/618/600/577/605/615/603/625/644/657/706/709/653/592/668/618/646/610/671/649/724/605/</value4>
+         <value5>P:1/W:171/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-19 14:59:45 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>35.71</value1>
+         <value2>90 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001187972</value3>
+         <value4>568/639/604/577/623/591/535/610/649/556/539/590/502/569/568/618/572/580/543/522/568/510/594/580/586/572/566/530/506/518/561/572/594/498/581/565/522/539/572/522/581/581/536/499/593/534/510/510/502/590/498/585/510/613/533/502/543/522/585/584/597/530/515/522/543/584/506/547/522/522/522/522/581/510/526/543/518/609/510/522/604/518/534/526/532/539/518/522/518/516/</value4>
+         <value5>P:1/W:317/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-19 15:05:08 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>35.49</value1>
+         <value2>90 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001244784</value3>
+         <value4>502/577/585/623/585/518/530/503/581/581/542/543/581/571/526/581/502/506/513/586/585/590/534/513/543/606/581/502/526/590/506/553/522/510/530/585/585/583/510/526/598/510/522/501/522/534/530/525/530/590/547/594/526/511/590/547/539/510/534/528/513/529/530/599/513/534/604/530/522/526/513/522/599/591/539/604/530/609/609/514/522/526/538/539/609/539/522/613/526/530/</value4>
+         <value5>P:1/W:349/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-19 15:10:29 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>36.28</value1>
+         <value2>90 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001316933</value3>
+         <value4>618/536/564/558/604/518/626/599/494/585/572/613/573/590/572/599/530/581/566/570/659/577/581/530/604/539/513/526/572/543/579/530/547/590/581/613/581/534/581/547/522/522/579/540/510/507/577/534/539/590/590/531/609/594/586/518/590/530/513/526/452/595/522/522/518/534/541/613/522/543/530/530/613/526/445/613/534/639/614/527/534/530/543/534/543/530/543/639/633/633/</value4>
+         <value5>P:1/W:26/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-19 15:19:04 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>35.78</value1>
+         <value2>90 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001381774</value3>
+         <value4>510/609/594/547/585/585/577/581/568/530/628/581/618/618/599/522/609/581/534/518/604/572/594/581/572/572/526/572/590/506/530/518/585/585/577/581/585/581/543/506/581/518/513/547/518/518/590/534/628/506/590/585/513/609/517/506/534/513/539/530/539/534/513/513/534/547/539/609/438/530/452/604/522/522/543/526/534/530/526/534/539/530/539/543/543/526/534/539/618/534/</value4>
+         <value5>P:1/W:237/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-19 15:23:47 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>35.88</value1>
+         <value2>90 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001443503</value3>
+         <value4>529/548/494/590/594/572/577/582/506/654/539/510/563/581/572/502/577/534/556/572/585/547/581/594/570/517/564/607/585/577/486/509/594/572/577/510/600/613/522/581/513/513/534/602/518/510/547/585/510/531/628/543/526/547/575/550/599/584/510/506/543/539/522/506/543/590/543/542/599/522/604/510/456/512/522/604/604/530/609/507/604/518/530/613/523/563/534/604/539/530/</value4>
+         <value5>P:1/W:344/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-19 15:28:00 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>35.18</value1>
+         <value2>90 wp's - RunTime: 5 - Report (NO/250)</value2>
+         <value3>0001547024</value3>
+         <value4>580/526/574/532/540/577/522/563/570/570/529/538/564/561/545/499/569/500/532/566/545/566/587/545/552/540/543/540/533/532/546/568/540/520/565/539/581/562/535/536/572/532/484/529/562/511/569/538/547/504/531/509/495/570/504/548/505/502/566/541/521/512/575/547/543/541/539/560/572/550/571/543/545/548/545/540/546/543/545/554/545/548/528/547/491/581/539/509/577/512/</value4>
+         <value5>P:1/W:205/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-19 15:48:15 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>6.97</value1>
+         <value2>08 wp's - RunTime: 5 - Report (NO/250)</value2>
+         <value3>0001701002</value3>
+         <value4>1104/1088/1302/1286/1283/1394/1130/1106/</value4>
+         <value5>P:1/W:38/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-20 10:36:07 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>6.45</value1>
+         <value2>08 wp's - RunTime: 5 - Report (NO/250)</value2>
+         <value3>0001721280</value3>
+         <value4>999/1033/1180/1217/1216/1230/1063/1029/</value4>
+         <value5>P:1/W:59/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-20 12:24:32 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>6.49</value1>
+         <value2>08 wp's - RunTime: 5 - Report (NO/250)</value2>
+         <value3>0001745143</value3>
+         <value4>995/1035/1215/1221/1237/1334/992/992/</value4>
+         <value5>P:1/W:45/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-20 14:59:06 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>6.40</value1>
+         <value2>08 wp's - RunTime: 5 - Report (NO/250)</value2>
+         <value3>0001761975</value3>
+         <value4>1000/1038/1231/1258/1171/1178/1009/1015/</value4>
+         <value5>P:1/W:46/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-20 15:41:03 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>14.48</value1>
+         <value2>32 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001785858</value3>
+         <value4>636/662/687/631/692/647/575/664/601/614/717/591/665/653/681/545/687/663/622/584/653/602/557/643/628/613/590/562/638/570/620/619/</value4>
+         <value5>P:1/W:169/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-20 15:50:50 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>14.55</value1>
+         <value2>32 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001793724</value3>
+         <value4>599/678/715/657/732/604/580/593/659/622/567/630/674/627/627/604/636/602/584/585/665/636/696/656/632/618/629/563/717/617/627/587/</value4>
+         <value5>P:1/W:128/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-20 15:59:00 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>5.30</value1>
+         <value2>08 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001863002</value3>
+         <value4>851/886/959/1026/964/1041/767/874/</value4>
+         <value5>P:1/W:5/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-25 14:46:40 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>4.93</value1>
+         <value2>08 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001866136</value3>
+         <value4>731/750/837/955/1038/944/812/783/</value4>
+         <value5>P:1/W:57/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2019-11-26 15:36:43 (v1.2.0/12.3.2+low.build.1571397535144)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>2.74</value1>
+         <value2>05 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001906002</value3>
+         <value4>767/724/764/775/779/</value4>
+         <value5>P:1/W:43/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2020-03-23 13:35:15 (v1.2.0/12.3.2+low.build.1580720818782)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>2.74</value1>
+         <value2>05 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001904966</value3>
+         <value4>694/751/783/822/768/</value4>
+         <value5>P:1/W:30/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>2020-03-23 13:38:07 (v1.2.0/12.3.2+low.build.1580720818782)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>2.37</value1>
+         <value2>05 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001915002</value3>
+         <value4>681/649/651/667/653/</value4>
+         <value5>P:1/W:21/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>NO-PWP-KICK -&gt; 2020-03-23 13:58:11 (v1.2.0/12.3.2+low.build.1580720818782)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>2.65</value1>
+         <value2>05 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001915906</value3>
+         <value4>727/744/723/786/702/</value4>
+         <value5>P:1/W:30/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>NO-PWP-KICK -&gt; 2020-03-23 14:00:52 (v1.2.0/12.3.2+low.build.1580720818782)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>5.51</value1>
+         <value2>08 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001917933</value3>
+         <value4>932/855/1070/1004/1048/1095/824/835/</value4>
+         <value5>P:1/W:49/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>NO-PWP-KICK -&gt; 2020-03-23 14:17:36 (v1.2.0/12.3.2+low.build.1580720818782)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>9.83</value1>
+         <value2>16 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001928160</value3>
+         <value4>821/721/868/888/750/902/865/737/790/816/933/880/922/928/920/923/</value4>
+         <value5>P:1/W:15/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>NO-PWP-KICK -&gt; 2020-03-23 14:22:59 (v1.2.0/12.3.2+low.build.1580720818782)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>12.49</value1>
+         <value2>20 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001949002</value3>
+         <value4>867/832/931/901/883/800/828/894/807/861/948/837/916/820/925/850/875/919/895/759/</value4>
+         <value5>P:1/W:93/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>NO-PWP-KICK -&gt; 2020-03-23 14:27:35 (v1.2.0/12.3.2+low.build.1580720818782)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>0,95</value1>
+         <value2>24 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001959804</value3>
+         <value4>51/60/56/52/55/49/58/47/61/61/48/58/42/72/78/42/50/65/51/51/49/50/65/49/</value4>
+         <value5>P:2/W:142/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>NO-PWP-KICK -&gt; 2020-03-23 14:31:12 (v1.2.0/12.3.2+low.build.1580720818782)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>5.64</value1>
+         <value2>08 wp's - RunTime: 2 - Report (NO/250)</value2>
+         <value3>0001987002</value3>
+         <value4>923/885/1011/1130/1025/1070/833/957/</value4>
+         <value5>P:1/W:5/R:/O:/D:</value5>
+         <validity_range>FREI</validity_range>
+         <key>NO-PWP-KICK -&gt; 2020-03-24 14:50:36 (v1.2.0/12.3.2+low.build.1580720818782)</key>
+      </row>
+      <row>
+         <client>1470</client>
+         <value1>AE.Performance.Index</value1>
+         <value2>WorkProcess used</value2>
+         <value3>RUN#</value3>
+         <value4>executed each WorkProcess</value4>
+         <value5>MQ backlog</value5>
+         <validity_range>FREI</validity_range>
+         <key>_executed @</key>
+      </row>
+   </static_values>
+</vara>

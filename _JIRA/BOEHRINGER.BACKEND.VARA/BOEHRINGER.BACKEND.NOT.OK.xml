@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vara>
+   <metadata>
+      <row>
+         <version>12.3.3</version>
+      </row>
+   </metadata>
+   <general_attributes>
+      <row>
+         <minimum_ae_version>11.2</minimum_ae_version>
+         <child_flags>00000000000000000000000000000000</child_flags>
+         <last_runtimes>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</last_runtimes>
+         <name>BOEHRINGER.BACKEND.NOT.OK</name>
+         <type>VARA</type>
+         <sub_type>BACKEND</sub_type>
+         <versioning_id>1405750629</versioning_id>
+      </row>
+   </general_attributes>
+   <variable_definitions>
+      <row>
+         <column_count>5</column_count>
+         <agent>SMUCPER06-2</agent>
+         <login>LOGIN.ALL</login>
+         <on_not_found>I</on_not_found>
+         <prefer_task_login>1</prefer_task_login>
+         <sort_order>0</sort_order>
+         <type>BACKEND</type>
+         <data_type>C</data_type>
+         <validity_range>FREI</validity_range>
+      </row>
+   </variable_definitions>
+   <backend_tabs>
+      <row>
+         <platform>WINDOWS</platform>
+         <tab_number>1</tab_number>
+         <name>WINDOWS</name>
+      </row>
+      <row>
+         <platform>UNIX</platform>
+         <tab_number>2</tab_number>
+         <name>UNIX</name>
+      </row>
+   </backend_tabs>
+   <commands>
+      <row>
+         <command>sleep 30 &amp;&amp; ls -l /mlogs/bptfot/datafiles/outbound/BI_Framework/SCM/FR_INT_* 2&amp;gt;/dev/null|wc -l</command>
+         <column_descriptions>Anz: 1(5)</column_descriptions>
+         <line_number>1</line_number>
+         <operating_system>*</operating_system>
+         <backend_tab_number>1</backend_tab_number>
+         <version>*</version>
+      </row>
+      <row>
+         <command>sleep 60</command>
+         <column_descriptions>Anz: 1(5)</column_descriptions>
+         <line_number>1</line_number>
+         <operating_system>*</operating_system>
+         <backend_tab_number>2</backend_tab_number>
+         <version>*</version>
+      </row>
+   </commands>
+</vara>

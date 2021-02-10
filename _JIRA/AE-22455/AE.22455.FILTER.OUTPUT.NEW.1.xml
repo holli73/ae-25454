@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<filter>
+   <metadata>
+      <row>
+         <version>12.3.3</version>
+      </row>
+   </metadata>
+   <general_attributes>
+      <row>
+         <minimum_ae_version>11.2</minimum_ae_version>
+         <child_flags>00000000000000000000000000000000</child_flags>
+         <last_runtimes>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</last_runtimes>
+         <name>AE.22455.FILTER.OUTPUT.NEW.1</name>
+         <type>FILTER</type>
+         <versioning_id>2101361297</versioning_id>
+      </row>
+   </general_attributes>
+   <filter_attributes>
+      <row>
+         <filter_type>OUTPUT</filter_type>
+         <operator>O</operator>
+      </row>
+   </filter_attributes>
+   <filter_definitions>
+      <row>
+         <contains>C</contains>
+         <filter_text>011075</filter_text>
+         <line_number>1</line_number>
+         <source_name>/home/uc4/DCC/v12.3-pg/ae/temp/WPsrv_trc_015_04.txt</source_name>
+         <source_type>F</source_type>
+      </row>
+   </filter_definitions>
+</filter>

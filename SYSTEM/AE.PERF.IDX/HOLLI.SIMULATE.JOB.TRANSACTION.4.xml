@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scri>
+   <metadata>
+      <row>
+         <version>12.3.3</version>
+      </row>
+   </metadata>
+   <general_attributes>
+      <row>
+         <minimum_ae_version>11.2</minimum_ae_version>
+         <auto_deactivation>A</auto_deactivation>
+         <child_flags>00000000000000000000000000000000</child_flags>
+         <ert>2</ert>
+         <last_runtimes>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</last_runtimes>
+         <max_parallel_action>1</max_parallel_action>
+         <mrt_time>000000</mrt_time>
+         <name>HOLLI.SIMULATE.JOB.TRANSACTION.4</name>
+         <type>SCRI</type>
+         <has_object_variables>1</has_object_variables>
+         <inherit_output_filter>N</inherit_output_filter>
+         <queue>CLIENT_QUEUE</queue>
+         <versioning_id>-271960715</versioning_id>
+      </row>
+   </general_attributes>
+   <scripts>
+      <row>
+         <process><![CDATA[! AKTX
+! GENX is within this SCRI task
+! simulate JOB execution
+
+! EXEC
+:wait 0
+
+! EXAKTJOB
+:wait 0
+
+! EXAKTJOBQ
+:wait 0
+
+! EXSTAJ running!
+:wait 0
+
+! EXSTAJ ended
+:wait 0
+
+:if &simreport# = 'YES'
+
+! EXEC (report)
+:  wait 0
+
+! REP_DATA
+:  wait 0
+:  set &cnt# = 0
+:  while &cnt# lt &SIMREPORTSZ#
+:    p simulated report writting &cnt#
+:    set &cnt# = add(&cnt#, 1)
+:  endwhile
+! REP_QUITT
+:  wait 0
+
+! REP_END
+:  wait 0
+
+:endif
+
+! print one line
+:print &$NAME#]]></process>
+      </row>
+   </scripts>
+   <script_attributes>
+      <row>
+         <activation_at_runtime>1</activation_at_runtime>
+      </row>
+   </script_attributes>
+   <object_variables>
+      <row>
+         <name>&amp;SIMREPORT#</name>
+      </row>
+      <row>
+         <name>&amp;SIMREPORTSZ#</name>
+      </row>
+   </object_variables>
+   <rollback_definitions>
+      <row>
+      </row>
+   </rollback_definitions>
+</scri>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jobs>
+   <metadata>
+      <row>
+         <version>12.3.3</version>
+      </row>
+   </metadata>
+   <general_attributes>
+      <row>
+         <minimum_ae_version>11.2</minimum_ae_version>
+         <auto_deactivation>J</auto_deactivation>
+         <child_flags>00000000000000000000000000000000</child_flags>
+         <ert>13</ert>
+         <platform>UNIX</platform>
+         <last_runtimes>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</last_runtimes>
+         <max_parallel>1</max_parallel>
+         <max_parallel_action>1</max_parallel_action>
+         <mrt_time>000000</mrt_time>
+         <name>TEST021</name>
+         <type>JOBS</type>
+         <inherit_output_filter>N</inherit_output_filter>
+         <queue>CLIENT_QUEUE</queue>
+         <description>Test UNIX (*)</description>
+         <versioning_id>-1455967202</versioning_id>
+      </row>
+   </general_attributes>
+   <documentation>
+      <row>
+         <Docu><![CDATA[
+            [HINW]
+
+[RESTART/RECOVERY]
+
+[STEP01]                      
+Filewatcher ALGT0031.TRE 
+
+[PROG]
+$SYSSCR/sysfilewatch.ksh
+
+[DFIL]
+ALGT0031.TRE                 E
+        ]]></Docu>
+      </row>
+   </documentation>
+   <scripts>
+      <row>
+         <process><![CDATA[
+            
+!:print "fname: &fname#"
+
+:print ich generiere
+!:print "test &test#"
+:wait 30
+! :print "test &test#"
+! :wait 3
+! :print "test &test#"
+! :wait 3
+! :print "test &test#"
+! :wait 3
+! :print "test &test#"
+! :wait 3
+! :print "test &test#"
+! :wait 3
+
+:print ich bin generiert
+echo ich laufe
+sleep 30
+echo mein KALTAG ist $KALTAG und mein BUTAG ist $BUTAG
+! exit 1
+
+! sysuc4cli.ksh <<- EOF
+! :data ":put_var TEST.VAR,'UZAPPT00','test 003'"
+! EOF
+
+]]></process>
+      </row>
+      <row>
+         <pre_process><![CDATA[
+! if workingday, check time in precondition
+!:set &workingday# = valid_cale(&$PHYS_DATE_YYYYMMDD#, G.BAWAG.KAL, "TG")
+!:print "workingday: &workingday#"
+]]></pre_process>
+      </row>
+      <row>
+         <post_process><![CDATA[
+! :inc g.datecontext_set_fixed_m
+:print "nix"
+]]></post_process>
+      </row>
+   </scripts>
+   <job_attributes>
+      <row>
+         <activation_at_runtime>1</activation_at_runtime>
+         <platform>UNIX</platform>
+         <agent>FEDEX-001</agent>
+         <login>LOGIN.ALL</login>
+         <job_report_path>2</job_report_path>
+         <priority>0</priority>
+         <unix_shell>ksh</unix_shell>
+         <unix_shell_options></unix_shell_options>
+         <unix_type></unix_type>
+         <unix_cmd></unix_cmd>
+      </row>
+   </job_attributes>
+   <rollback_definitions>
+      <row>
+      </row>
+   </rollback_definitions>
+</jobs>
